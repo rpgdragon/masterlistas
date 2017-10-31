@@ -52,6 +52,7 @@
             android:hint="Contraseña"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
+            android:background="@drawable/ripple2"
             android:textSize="14dp" />
     </android.support.design.widget.TextInputLayout>
     <CheckBox
@@ -76,4 +77,32 @@
         app:layout_constraintLeft_toRightOf="@+id/recordarme"
         app:layout_constraintTop_toTopOf="@+id/recordarme"
         android:layout_marginLeft="8dp"/>
+    <Button
+        android:id="@+id/butt_acceder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:elevation="2dp"
+        android:onClick="acceder"
+        android:text="Iniciar Sesión"
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recordarme"
+        app:layout_constraintRight_toLeftOf="@+id/butt_borrar"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp" />
+    <Button
+        android:id="@+id/butt_borrar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Borrar"
+        android:clickable="true"
+        android:background="@drawable/ripple"
+        android:textColor="@android:color/white"
+        android:elevation="2dp"
+        android:onClick="borrarCampos"
+        app:layout_constraintLeft_toRightOf="@+id/butt_acceder"
+        app:layout_constraintTop_toTopOf="@+id/butt_acceder"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp" />
 </android.support.constraint.ConstraintLayout>
