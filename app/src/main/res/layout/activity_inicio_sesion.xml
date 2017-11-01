@@ -110,6 +110,26 @@
         app:layout_constraintTop_toTopOf="@+id/butt_acceder"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp" />
+    <TextView
+        android:id="@+id/olvidado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HE OLVIDADO MI CONTRASEÑA"
+        android:background="@drawable/ripple2"
+        android:clickable="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/butt_acceder"
+        android:layout_marginTop="16dp"/>
+    <TextView
+        android:id="@+id/registro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="QUIERO REGISTRARME EN LA APLICACIÓN"
+        android:background="@drawable/ripple2"
+        android:clickable="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/olvidado"
+        android:layout_marginTop="4dp"/>
     <Button android:id="@+id/boton_facebook"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -120,7 +140,7 @@
         android:textColor="#000"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/butt_acceder"
+        app:layout_constraintTop_toBottomOf="@+id/registro"
         android:layout_marginTop="32dp"/>
     <Button android:id="@+id/boton_google"
         android:layout_width="0dp"
