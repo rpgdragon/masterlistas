@@ -20,7 +20,7 @@ public class InicioSesionActivity extends AppCompatActivity {
     public void loguearCheckbox(View v) {
         CheckBox recordarme= (CheckBox) findViewById(R.id.recordarme);
         String s = "Recordar datos de usuario: " + (recordarme.isChecked() ? "Sí" : "No");
-        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     public void mostrarContraseña(View v) {
@@ -45,5 +45,16 @@ public class InicioSesionActivity extends AppCompatActivity {
         usuario.setText("");
         contraseña.setText("");
         usuario.requestFocus();
+    }
+
+    public void olvidocontraseña (View view){
+        StringBuilder strb = new StringBuilder();
+        strb.append("Aqui iria el olvido de contraseña");
+        Toast.makeText(this,strb.toString(),Toast.LENGTH_SHORT).show();
+    }
+
+    public void irRegistrar (View view){
+        Intent intent = new Intent(this, RegistroActivity.class);
+        startActivity(intent);
     }
 }

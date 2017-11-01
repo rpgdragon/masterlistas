@@ -117,6 +117,7 @@
         android:text="HE OLVIDADO MI CONTRASEÑA"
         android:background="@drawable/ripple2"
         android:clickable="true"
+        android:onClick="olvidocontraseña"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/butt_acceder"
         android:layout_marginTop="16dp"/>
@@ -126,6 +127,7 @@
         android:layout_height="wrap_content"
         android:text="QUIERO REGISTRARME EN LA APLICACIÓN"
         android:background="@drawable/ripple2"
+        android:onClick="irRegistrar"
         android:clickable="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/olvidado"
