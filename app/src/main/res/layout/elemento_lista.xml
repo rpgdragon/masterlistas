@@ -23,6 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
+        android:transitionName ="@string/transition_name_img"
         tools:src="@drawable/casa" />
     <TextView
         android:id="@+id/nombre"
