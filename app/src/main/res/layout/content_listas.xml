@@ -75,4 +75,10 @@
         app:rippleColor="#616161"
         android:clickable="true"
         android:src="@drawable/fab_plus"/>
+
+    <com.sdsmdg.harjot.rotatingtext.RotatingTextWrapper
+        android:id="@+id/custom_switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
 </android.support.design.widget.CoordinatorLayout>
