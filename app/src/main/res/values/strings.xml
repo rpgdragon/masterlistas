@@ -3,4 +3,5 @@
     <string name="drawer_open">navigation drawer abierto</string>
     <string name="drawer_close">navigation drawer cerrado</string>
     <string name="transition_name_img">transition:IMG</string>
+    <string name="transition_name_boton">transition:BOTON</string>
 </resources>

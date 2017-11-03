@@ -27,9 +27,11 @@ public class ListasActivity extends AppCompatActivity implements NavigationView.
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
+    private ListasActivity _this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        _this = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listas);
         FloatingActionButton fab=(FloatingActionButton) findViewById(R.id.fab);
@@ -53,17 +55,14 @@ public class ListasActivity extends AppCompatActivity implements NavigationView.
         adapter = new ListaAdapter(items);
         recycler.setAdapter(adapter);
         recycler.addOnItemTouchListener( new RecyclerItemClickListener(ListasActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override public void onItemClick(View v, int position) {
-                recycler.addOnItemTouchListener( new RecyclerItemClickListener(ListasActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View v, int position) {
-                        Intent intent = new Intent(ListasActivity.this, DetalleListaActivity.class);
-                        intent.putExtra("numeroLista", position);
-                        ActivityOptionsCompat options = ActivityOptionsCompat. makeSceneTransitionAnimation(ListasActivity.this, new Pair<View, String>(v.findViewById(R.id.imagen), getString(R.string.transition_name_img)));
-                        ActivityCompat.startActivity(ListasActivity.this, intent, options .toBundle());
-                    }
-                }));
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(ListasActivity.this, DetalleListaActivity.class);
+                intent.putExtra("numeroLista", position);
+                ActivityOptionsCompat options = ActivityOptionsCompat. makeSceneTransitionAnimation( ListasActivity.this, new Pair<View, String>(v.findViewById(R.id.imagen), getString(R.string.transition_name_img)), new Pair<View, String>(_this.findViewById(R.id.fab), getString(R.string.transition_name_boton)) );
+                ActivityCompat.startActivity(ListasActivity.this, intent, options .toBundle());
             }
-        }) );
+        }));
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
