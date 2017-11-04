@@ -1,4 +1,4 @@
-package org.example.masterlistas;
+package org.example.jmcastellano.masterlistas;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.example.masterlistas.R;
 
 public class RegistroActivity extends AppCompatActivity {
 

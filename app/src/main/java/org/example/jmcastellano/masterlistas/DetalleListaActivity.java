@@ -1,4 +1,4 @@
-package org.example.masterlistas;
+package org.example.jmcastellano.masterlistas;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+
+import org.example.masterlistas.R;
 
 public class DetalleListaActivity extends AppCompatActivity {
 

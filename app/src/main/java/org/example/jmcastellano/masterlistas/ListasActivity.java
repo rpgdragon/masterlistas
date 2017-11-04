@@ -1,4 +1,4 @@
-package org.example.masterlistas;
+package org.example.jmcastellano.masterlistas;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,6 +23,8 @@ import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
 import com.sdsmdg.harjot.rotatingtext.RotatingTextWrapper;
 import com.sdsmdg.harjot.rotatingtext.models.Rotatable;
+
+import org.example.masterlistas.R;
 
 import java.util.ArrayList;
 import java.util.List;

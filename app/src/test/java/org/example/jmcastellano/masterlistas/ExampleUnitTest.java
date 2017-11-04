@@ -1,4 +1,4 @@
-package org.example.masterlistas;
+package org.example.jmcastellano.masterlistas;
 
 import org.junit.Test;
 

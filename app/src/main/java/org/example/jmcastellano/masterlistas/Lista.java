@@ -1,4 +1,4 @@
-package org.example.masterlistas;
+package org.example.jmcastellano.masterlistas;
 
 /**
  * Created by jmcastellano on 30/10/2017.

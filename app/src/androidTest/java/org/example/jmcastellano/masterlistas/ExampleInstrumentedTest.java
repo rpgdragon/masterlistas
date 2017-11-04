@@ -1,4 +1,4 @@
-package org.example.masterlistas;
+package org.example.jmcastellano.masterlistas;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

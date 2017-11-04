@@ -1,4 +1,4 @@
-package org.example.masterlistas;
+package org.example.jmcastellano.masterlistas;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.example.masterlistas.R;
 
 public class InicioSesionActivity extends AppCompatActivity {
 
