@@ -8,8 +8,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.example.masterlistas.R;
-
 public class RegistroActivity extends AppCompatActivity {
 
     @Override

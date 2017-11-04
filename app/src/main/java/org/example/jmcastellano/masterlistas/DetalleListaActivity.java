@@ -8,8 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
-import org.example.masterlistas.R;
-
 public class DetalleListaActivity extends AppCompatActivity {
 
     @Override

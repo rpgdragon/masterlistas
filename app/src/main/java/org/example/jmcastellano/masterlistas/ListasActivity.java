@@ -19,18 +19,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
 import com.sdsmdg.harjot.rotatingtext.RotatingTextWrapper;
 import com.sdsmdg.harjot.rotatingtext.models.Rotatable;
-
-import org.example.masterlistas.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListasActivity extends AppCompatActivity{
 
+    private FirebaseAnalytics analytics;
     private FlowingDrawer mDrawer;
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
@@ -39,8 +39,9 @@ public class ListasActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        _this = this;
         super.onCreate(savedInstanceState);
+        _this = this;
+        analytics = FirebaseAnalytics.getInstance(this);
         Transition lista_enter = TransitionInflater.from(this) .inflateTransition(R.transition.transition_lista_enter);
         getWindow().setEnterTransition(lista_enter);
         setContentView(R.layout.activity_listas);
@@ -86,6 +87,25 @@ public class ListasActivity extends AppCompatActivity{
         });
         mDrawer = (FlowingDrawer) findViewById(R.id.drawerlayout);
         mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_BEZEL);
+        mDrawer.setOnDrawerStateChangeListener(new ElasticDrawer.OnDrawerStateChangeListener() {
+            @Override
+            public void onDrawerStateChange(int oldState, int newState) {
+                Bundle b = new Bundle();
+                if (newState == ElasticDrawer.STATE_CLOSED) {
+                    b.putString("Estado","Cerrar");
+                    analytics.logEvent("FlowerDrawer", b);
+                }
+                else{
+                    if(newState == ElasticDrawer.STATE_OPEN){
+                        b.putString("Estado","Abrir");
+                        analytics.logEvent("FlowerDrawer", b);
+                    }
+                }
+            }
+
+            @Override
+            public void onDrawerSlide(float openRatio, int offsetPixels) {}
+        });
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

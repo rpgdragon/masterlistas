@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "994026901664",
+    "firebase_url": "https://masterlistas-c9394.firebaseio.com",
+    "project_id": "masterlistas-c9394",
+    "storage_bucket": "masterlistas-c9394.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994026901664:android:924ccb43df6b1cff",
+        "android_client_info": {
+          "package_name": "org.example.jmcastellano.masterlistas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994026901664-fjc0g9t2uhhk18njjckrvkf1fqacjr84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfXjjQAPuLYZXG-kB7v3wm-fS7RvbAOa4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
