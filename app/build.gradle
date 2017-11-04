@@ -31,5 +31,8 @@ dependencies {
     compile 'com.mxn.soul:flowingdrawer-core:2.0.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.sdsmdg.harjot:rotatingtext:1.0.2'
+    compile 'com.google.firebase:firebase-core:11.4.2'
 
 }
+
+apply plugin: 'com.google.gms.google-services'
