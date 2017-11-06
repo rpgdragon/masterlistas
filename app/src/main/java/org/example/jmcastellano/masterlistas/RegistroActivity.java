@@ -25,15 +25,12 @@ public class RegistroActivity extends AppCompatActivity {
     public void mostrarContraseña(View v) {
         EditText contraseña = (EditText) findViewById(R.id.contraseña);
         CheckBox mostrar = (CheckBox) findViewById(R.id.mostrar_contraseña);
-        EditText contraseñaconfirmar = (EditText) findViewById(R.id.contraseñaconfirmar);
         if (mostrar.isChecked()) {
             contraseña.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
-            contraseñaconfirmar.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
 
         }
         else {
             contraseña.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            contraseñaconfirmar.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         }
     }
 
@@ -65,10 +62,8 @@ public class RegistroActivity extends AppCompatActivity {
     public void borrarCampos (View view){
         EditText usuario = (EditText) findViewById(R.id.usuario);
         EditText contraseña = (EditText) findViewById(R.id.contraseña);
-        EditText contraseñaconfirmar = (EditText) findViewById(R.id.contraseñaconfirmar);
         usuario.setText("");
         contraseña.setText("");
-        contraseñaconfirmar.setText("");
         usuario.requestFocus();
     }
 
