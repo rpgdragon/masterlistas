@@ -1,4 +1,4 @@
-package org.example.jmcastellano.masterlistas;
+package org.jcastellano.masterlistas;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +31,8 @@ import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
 import com.sdsmdg.harjot.rotatingtext.RotatingTextWrapper;
 import com.sdsmdg.harjot.rotatingtext.models.Rotatable;
+
+import org.jcastellano.masterlistas.masterlistas.R;
 
 import java.util.ArrayList;
 import java.util.List;

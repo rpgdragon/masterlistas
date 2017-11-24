@@ -1,7 +1,5 @@
-package org.example.jmcastellano.masterlistas;
+package org.jcastellano.masterlistas;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -10,12 +8,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class InicioSesionActivity extends AppCompatActivity {
+import org.jcastellano.masterlistas.masterlistas.R;
+
+public class RegistroActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inicio_sesion);
+        setContentView(R.layout.activity_registro);
     }
 
     public void loguearCheckbox(View v) {
@@ -29,15 +29,36 @@ public class InicioSesionActivity extends AppCompatActivity {
         CheckBox mostrar = (CheckBox) findViewById(R.id.mostrar_contraseña);
         if (mostrar.isChecked()) {
             contraseña.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+
         }
         else {
             contraseña.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         }
     }
 
-    public void acceder (View view){
-        Intent intent = new Intent(this, ListasActivity.class);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    public void registrar (View view){
+        EditText contraseña = (EditText) findViewById(R.id.contraseña);
+        EditText usuario = (EditText) findViewById(R.id.usuario);
+        StringBuilder strb = new StringBuilder();
+        if(usuario!=null && usuario.getText()!=null && usuario.getText().length() > 0 && contraseña!=null && contraseña.getText()!=null && contraseña.getText().length() > 0) {
+            strb.append(getString(R.string.cuentacreada));
+            strb.append(usuario.getText());
+            strb.append(" " + getString(R.string.contrase_a) + " :" );
+            strb.append(contraseña.getText());
+            Toast.makeText(this, strb.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void registrarfacebook (View view){
+        StringBuilder strb = new StringBuilder();
+        strb.append(getString(R.string.creadafacebook));
+        Toast.makeText(this,strb.toString(),Toast.LENGTH_SHORT).show();
+    }
+
+    public void registrargoogle (View view){
+        StringBuilder strb = new StringBuilder();
+        strb.append(getString(R.string.creadagoogle));
+        Toast.makeText(this,strb.toString(),Toast.LENGTH_SHORT).show();
     }
 
     public void borrarCampos (View view){
@@ -48,14 +69,7 @@ public class InicioSesionActivity extends AppCompatActivity {
         usuario.requestFocus();
     }
 
-    public void olvidocontraseña (View view){
-        StringBuilder strb = new StringBuilder();
-        strb.append(getString(R.string.aqui_iria));
-        Toast.makeText(this,strb.toString(),Toast.LENGTH_SHORT).show();
-    }
-
-    public void irRegistrar (View view){
-        Intent intent = new Intent(this, RegistroActivity.class);
-        startActivity(intent);
+    public void irLogin (View view){
+        finish();
     }
 }

@@ -1,4 +1,4 @@
-package org.example.jmcastellano.masterlistas;
+package org.jcastellano.masterlistas;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
