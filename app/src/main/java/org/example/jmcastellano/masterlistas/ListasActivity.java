@@ -57,13 +57,13 @@ public class ListasActivity extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Se presionó el FAB", Snackbar.LENGTH_LONG) .show();
+                Snackbar.make(view, getString(R.string.fabpush), Snackbar.LENGTH_LONG) .show();
             }
         });
         //Inicializar los elementos
         List items = new ArrayList();
-        items.add(new Lista(R.drawable.trabajo, "Trabajo", 2));
-        items.add(new Lista(R.drawable.casa, "Personal", 3));
+        items.add(new Lista(R.drawable.trabajo, getString(R.string.trabajo), 2));
+        items.add(new Lista(R.drawable.casa, getString(R.string.personal), 3));
         // Obtener el Recycler
         recycler = (RecyclerView) findViewById(R.id.reciclador);
         recycler.setHasFixedSize(true);
@@ -71,7 +71,7 @@ public class ListasActivity extends AppCompatActivity{
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
         // Crear un nuevo adaptador
-        adapter = new ListaAdapter(items);
+        adapter = new ListaAdapter(items,this);
         recycler.setAdapter(adapter);
         recycler.addOnItemTouchListener( new RecyclerItemClickListener(ListasActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -125,11 +125,11 @@ public class ListasActivity extends AppCompatActivity{
         RotatingTextWrapper rotatingTextWrapper = (RotatingTextWrapper) findViewById(R.id.custom_switcher);
         rotatingTextWrapper.setSize(24);
 
-        Rotatable rotatable = new Rotatable(Color.parseColor("#0077c2"), 1000, "Categorias", "Trabajo","Personal","Cine", "Televisión", "Videojuegos", "Series", "Libros", "Medio Ambiente");
+        Rotatable rotatable = new Rotatable(Color.parseColor("#0077c2"), 1000, getString(R.string.categorias), getString(R.string.trabajo),getString(R.string.personal),getString(R.string.cine), getString(R.string.television), getString(R.string.videojuegos), getString(R.string.series), getString(R.string.libros), getString(R.string.medioambiente));
         rotatable.setSize(24);
         rotatable.setAnimationDuration(500);
 
-        rotatingTextWrapper.setContent("Elije entre ", rotatable);
+        rotatingTextWrapper.setContent(getString(R.string.elijeentre), rotatable);
 
         remoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings config = new FirebaseRemoteConfigSettings .Builder().setDeveloperModeEnabled(true).build();
@@ -142,10 +142,10 @@ public class ListasActivity extends AppCompatActivity{
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(ListasActivity.this, "Fetch OK", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ListasActivity.this, R.string.fetchok, Toast.LENGTH_SHORT).show();
                             remoteConfig.activateFetched();
                         } else {
-                            Toast.makeText(ListasActivity.this, "Fetch ha fallado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ListasActivity.this, R.string.fetchfallado, Toast.LENGTH_SHORT).show();
                         }
                         boolean abrir = remoteConfig.getBoolean("navigation_drawer_abierto");
                         if (abrir){

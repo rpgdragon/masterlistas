@@ -34,13 +34,13 @@
                     android:id="@+id/text_lista"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Listas"
+                    android:text="@string/listas"
                     android:textColor="#fff"
                     android:textSize="18sp" />
             </android.support.v7.widget.Toolbar>
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Listas disponibles en la aplicación Master Listas"
+                android:text="@string/listas_disponibles_en_la_aplicaci_n_master_listas"
                 android:textColor="#fff"
                 android:textSize="18sp"
                 android:layout_marginTop="100dp"

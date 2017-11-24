@@ -20,18 +20,18 @@ public class DetalleListaActivity extends AppCompatActivity {
         toolbar.setTitle("");
         ImageView imageView = (ImageView) findViewById(R.id.imagen);
         if (numeroLista == 0) {
-            toolbar.setTitle("Trabajo");
+            toolbar.setTitle(getString(R.string.trabajo));
             imageView.setImageResource(R.drawable.trabajo);
         }
         else {
-            toolbar.setTitle("Personal");
+            toolbar.setTitle(getString(R.string.personal));
             imageView.setImageResource(R.drawable.casa);
         }
         FloatingActionButton fab=(FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Se presionó el FAB", Snackbar.LENGTH_LONG) .show();
+                Snackbar.make(view, getString(R.string.fabpush), Snackbar.LENGTH_LONG) .show();
             }
         });
     }

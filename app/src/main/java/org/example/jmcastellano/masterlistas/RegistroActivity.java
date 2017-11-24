@@ -18,7 +18,7 @@ public class RegistroActivity extends AppCompatActivity {
 
     public void loguearCheckbox(View v) {
         CheckBox recordarme= (CheckBox) findViewById(R.id.recordarme);
-        String s = "Recordar datos de usuario: " + (recordarme.isChecked() ? "Sí" : "No");
+        String s = getString(R.string.recordar) + (recordarme.isChecked() ? getString(android.R.string.yes) : getString(android.R.string.no));
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
@@ -39,9 +39,9 @@ public class RegistroActivity extends AppCompatActivity {
         EditText usuario = (EditText) findViewById(R.id.usuario);
         StringBuilder strb = new StringBuilder();
         if(usuario!=null && usuario.getText()!=null && usuario.getText().length() > 0 && contraseña!=null && contraseña.getText()!=null && contraseña.getText().length() > 0) {
-            strb.append("Cuenta creada con los datos: Usuario: ");
+            strb.append(getString(R.string.cuentacreada));
             strb.append(usuario.getText());
-            strb.append(" Contraseña: ");
+            strb.append(" " + getString(R.string.contrase_a) + " :" );
             strb.append(contraseña.getText());
             Toast.makeText(this, strb.toString(), Toast.LENGTH_SHORT).show();
         }
@@ -49,13 +49,13 @@ public class RegistroActivity extends AppCompatActivity {
 
     public void registrarfacebook (View view){
         StringBuilder strb = new StringBuilder();
-        strb.append("Cuenta creada con Facebook");
+        strb.append(getString(R.string.creadafacebook));
         Toast.makeText(this,strb.toString(),Toast.LENGTH_SHORT).show();
     }
 
     public void registrargoogle (View view){
         StringBuilder strb = new StringBuilder();
-        strb.append("Cuenta creada con Google");
+        strb.append(getString(R.string.creadagoogle));
         Toast.makeText(this,strb.toString(),Toast.LENGTH_SHORT).show();
     }
 
