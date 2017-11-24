@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">MasterListes</string>
+    <string name="drawer_open">navigation drawer ouvert</string>
+    <string name="drawer_close">navigation drawer fermé</string>
+    <string name="iniciar_sesi_n">Commencer la session</string>
+    <string name="nombre_de_usuario_o_correo">Nom d\'utilisateur ou mail</string>
+    <string name="contrase_a">passe</string>
+    <string name="recordarme">rappelle moi</string>
+    <string name="mostrar_contrase_a">Afficher mot de passe</string>
+    <string name="borrar">Supprimer</string>
+    <string name="he_olvidado_mi_contrase_a">J\'AI OUBLIÉ MON MOT DE PASSE</string>
+    <string name="quiero_registrarme_en_la_aplicaci_n">JE VEUX M\'INSCRIRE DANS LA DEMANDE</string>
+    <string name="iniciar_sesi_n_con_facebook">Connectez-vous avec Facebook</string>
+    <string name="iniciar_sesi_n_con_google">Connectez-vous avec Google</string>
+    <string name="registrar_cuenta">Enregistrer un compte</string>
+    <string name="registrar">Enregistrer</string>
+    <string name="ya_tienes_cuenta_conectate">Vous avez déjà un compte? Connectez-vous!</string>
+    <string name="opci_n_1">Choix 1</string>
+    <string name="opci_n_2">Choix 2</string>
+    <string name="acciones_adicionales">Actions supplémentaires</string>
+    <string name="opci_n_3">Choix 3</string>
+    <string name="preferencias">Préférences</string>
+    <string name="compartir">Partager</string>
+    <string name="recordar">Se souvenir des données de l\'utilisateur:</string>
+    <string name="aqui_iria">Ici irait le mot de passe oublié</string>
+    <string name="elementos">Eléments</string>
+    <string name="trabajo">Job</string>
+    <string name="personal">Personnel</string>
+    <string name="fabpush">Le FAB a été pressé</string>
+    <string name="elijeentre">Choisissez entre </string>
+    <string name="fetchok">Récupérer OK</string>
+    <string name="fetchfallado">Va chercher l\'automne</string>
+    <string name="categorias">Catégories</string>
+    <string name="cine">Ciné</string>
+    <string name="television">Télévision</string>
+    <string name="videojuegos">Jeux video</string>
+    <string name="series">Séries</string>
+    <string name="libros">Livres</string>
+    <string name="medioambiente">Environnement</string>
+    <string name="cuentacreada">Compte créé avec les données:</string>
+    <string name="creadafacebook">Compte créé avec Facebook</string>
+    <string name="creadagoogle">Compte créé avec Google</string>
+    <string name="listas">Listes</string>
+    <string name="listas_disponibles_en_la_aplicaci_n_master_listas">Listes disponibles dans l\'application MasterListes</string>
+
+</resources>

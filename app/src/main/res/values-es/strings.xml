@@ -39,6 +39,7 @@
     <string name="medioambiente">Medio Ambiente</string>
     <string name="cuentacreada">Cuenta creada con los datos: Usuario:</string>
     <string name="creadafacebook">Cuenta creada con Facebook</string>
+    <string name="creadagoogle">Cuenta creada con Google</string>
     <string name="listas">Listas</string>
     <string name="listas_disponibles_en_la_aplicaci_n_master_listas">Listas disponibles en la aplicación Master Listas</string>
 
