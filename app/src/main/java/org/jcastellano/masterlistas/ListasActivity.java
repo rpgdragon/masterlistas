@@ -224,7 +224,7 @@ public class ListasActivity extends AppCompatActivity{
         // Obtenemos la URI usando el FileProvider
         File path = new File(getCacheDir(), "images");
         File file = new File(path, "image.png");
-        Uri uri= FileProvider.getUriForFile(this, "org.jmcastellano.masterlistas.fileprovider", file);
+        Uri uri= FileProvider.getUriForFile(this, "org.jcastellano.masterlistas.fileprovider", file);
         //Compartimos la URI
         if (uri != null) {
             Intent i = new Intent(Intent.ACTION_SEND); i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
