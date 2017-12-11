@@ -91,7 +91,14 @@ public class ListasActivity extends AppCompatActivity{
         navigationView.setNavigationItemSelectedListener( new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                Toast.makeText(getApplicationContext(),menuItem.getTitle(), Toast.LENGTH_SHORT).show(); return false;
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_compartir:
+                        compatirTexto("http://play.google.com/store/apps/details?id=" + getPackageName());
+                        break;
+                    default:
+                        Toast.makeText(getApplicationContext(), menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                }
+                return false;
             }
         });
         mDrawer = (FlowingDrawer) findViewById(R.id.drawerlayout);
@@ -179,5 +186,12 @@ public class ListasActivity extends AppCompatActivity{
             SharedPreferences.Editor e = sp.edit();
             e.putBoolean("abrePrimeraVez", false).commit();
         }
+    }
+
+    void compatirTexto(String texto) {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_TEXT, texto);
+        startActivity(Intent.createChooser(i, "Selecciona aplicación"));
     }
 }
