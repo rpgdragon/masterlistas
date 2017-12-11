@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:994026901664:android:924ccb43df6b1cff",
         "android_client_info": {
-          "package_name": "org.example.jmcastellano.masterlistas"
+          "package_name": "org.jmcastellano.masterlistas.listas.notas"
         }
       },
       "oauth_client": [

@@ -1,4 +1,4 @@
-package org.jcastellano.masterlistas.masterlistas;
+package org.jcastellano.masterlistas;
 
 import org.junit.Test;
 

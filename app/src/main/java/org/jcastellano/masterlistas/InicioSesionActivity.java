@@ -6,18 +6,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.jcastellano.masterlistas.masterlistas.R;
+import java.util.ArrayList;
 
 public class InicioSesionActivity extends AppCompatActivity {
+
+    private ArrayList bloqueo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_sesion);
+        Button buttonBloqueo = (Button) findViewById(R.id.boton_facebook);
+        buttonBloqueo.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                incrementaIndiceDeBloqueo(view);
+            }
+        });
+        Button buttonANR = (Button)findViewById(R.id.boton_google);
+        buttonANR.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                incrementaIndiceDeANR(view);
+            }
+        });
     }
 
     public void loguearCheckbox(View v) {
@@ -26,7 +41,7 @@ public class InicioSesionActivity extends AppCompatActivity {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    public void mostrarContraseña(View v) {
+    public void mostrarContrasena(View v) {
         EditText contraseña = (EditText) findViewById(R.id.contraseña);
         CheckBox mostrar = (CheckBox) findViewById(R.id.mostrar_contraseña);
         if (mostrar.isChecked()) {
@@ -50,7 +65,7 @@ public class InicioSesionActivity extends AppCompatActivity {
         usuario.requestFocus();
     }
 
-    public void olvidocontraseña (View view){
+    public void olvidocontrasena (View view){
         StringBuilder strb = new StringBuilder();
         strb.append(getString(R.string.aqui_iria));
         Toast.makeText(this,strb.toString(),Toast.LENGTH_SHORT).show();
@@ -59,5 +74,17 @@ public class InicioSesionActivity extends AppCompatActivity {
     public void irRegistrar (View view){
         Intent intent = new Intent(this, RegistroActivity.class);
         startActivity(intent);
+    }
+
+    public void incrementaIndiceDeBloqueo(View view){
+        bloqueo.add(null);
+    }
+
+    public void incrementaIndiceDeANR(View view){
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

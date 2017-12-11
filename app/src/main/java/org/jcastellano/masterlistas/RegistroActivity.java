@@ -8,7 +8,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.jcastellano.masterlistas.masterlistas.R;
 
 public class RegistroActivity extends AppCompatActivity {
 
@@ -24,7 +23,7 @@ public class RegistroActivity extends AppCompatActivity {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    public void mostrarContraseña(View v) {
+    public void mostrarContrasena(View v) {
         EditText contraseña = (EditText) findViewById(R.id.contraseña);
         CheckBox mostrar = (CheckBox) findViewById(R.id.mostrar_contraseña);
         if (mostrar.isChecked()) {
