@@ -181,6 +181,7 @@ public class ListasActivity extends AppCompatActivity{
                 });
             }
         }, 0);
+        new RateMyApp(this).app_launched();
     }
 
     @Override
