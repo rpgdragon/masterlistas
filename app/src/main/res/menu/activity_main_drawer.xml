@@ -16,9 +16,13 @@
             <item android:id="@+id/nav_preferencias"
                 android:icon="@android:drawable/ic_menu_manage"
                 android:title="@string/preferencias" />
-                <item android:id="@+id/nav_compartir"
+            <item android:id="@+id/nav_compartir"
                     android:icon="@android:drawable/ic_menu_share"
                     android:title="@string/compartir" />
+            <item android:id="@+id/nav_compartir_lista"
+                android:icon="@android:drawable/ic_menu_share"
+                android:title="Compartir Lista" />
         </menu>
     </item>
+
 </menu>

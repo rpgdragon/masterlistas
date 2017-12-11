@@ -95,6 +95,9 @@ public class ListasActivity extends AppCompatActivity{
                     case R.id.nav_compartir:
                         compatirTexto("http://play.google.com/store/apps/details?id=" + getPackageName());
                         break;
+                    case R.id.nav_compartir_lista:
+                        compatirTexto("LISTA DE LA COMPRA: patatas, leche, huevos. ---- " + "Compartido por: http://play.google.com/store/apps/details?id="+ getPackageName());
+                        break;
                     default:
                         Toast.makeText(getApplicationContext(), menuItem.getTitle(), Toast.LENGTH_SHORT).show();
                 }
