@@ -2,7 +2,10 @@ package org.jcastellano.masterlistas;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +13,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +37,9 @@ import com.sdsmdg.harjot.rotatingtext.RotatingTextWrapper;
 import com.sdsmdg.harjot.rotatingtext.models.Rotatable;
 
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +104,10 @@ public class ListasActivity extends AppCompatActivity{
                         break;
                     case R.id.nav_compartir_lista:
                         compatirTexto("LISTA DE LA COMPRA: patatas, leche, huevos. ---- " + "Compartido por: http://play.google.com/store/apps/details?id="+ getPackageName());
+                        break;
+                    case R.id.nav_compartir_logo:
+                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+                        compatirBitmap(bitmap, "Compartido por: "+ "http://play.google.com/store/apps/details?id="+getPackageName());
                         break;
                     default:
                         Toast.makeText(getApplicationContext(), menuItem.getTitle(), Toast.LENGTH_SHORT).show();
@@ -196,5 +207,29 @@ public class ListasActivity extends AppCompatActivity{
         i.setType("text/plain");
         i.putExtra(Intent.EXTRA_TEXT, texto);
         startActivity(Intent.createChooser(i, "Selecciona aplicación"));
+    }
+
+    void compatirBitmap(Bitmap bitmap, String texto) { // guardamos bitmap en el directorio cache
+        try {
+            File cachePath = new File(getCacheDir(), "images");
+            cachePath.mkdirs();
+            FileOutputStream s = new FileOutputStream(cachePath+"/image.png");
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, s);
+            s.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Obtenemos la URI usando el FileProvider
+        File path = new File(getCacheDir(), "images");
+        File file = new File(path, "image.png");
+        Uri uri= FileProvider.getUriForFile(this, "org.jmcastellano.masterlistas.fileprovider", file);
+        //Compartimos la URI
+        if (uri != null) {
+            Intent i = new Intent(Intent.ACTION_SEND); i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            // temp permission for receiving app to read this file
+            i.setDataAndType(uri,getContentResolver().getType(uri)); i.putExtra(Intent.EXTRA_STREAM, uri);
+            i.putExtra(Intent.EXTRA_TEXT, texto); startActivity(Intent.createChooser(i, "Selecciona aplicación"));
+        }
     }
 }
