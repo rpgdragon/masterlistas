@@ -109,6 +109,9 @@ public class ListasActivity extends AppCompatActivity{
                         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
                         compatirBitmap(bitmap, "Compartido por: "+ "http://play.google.com/store/apps/details?id="+getPackageName());
                         break;
+                    case R.id.nav_compartir_desarrollador:
+                        compatirTexto( "https://play.google.com/store/apps/dev?id=5995071858532195111");
+                        break;
                     default:
                         Toast.makeText(getApplicationContext(), menuItem.getTitle(), Toast.LENGTH_SHORT).show();
                 }
