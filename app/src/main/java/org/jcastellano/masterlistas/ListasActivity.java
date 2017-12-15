@@ -1,5 +1,6 @@
 package org.jcastellano.masterlistas;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -24,6 +25,7 @@ import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -61,6 +63,7 @@ public class ListasActivity extends AppCompatActivity{
         Transition lista_enter = TransitionInflater.from(this) .inflateTransition(R.transition.transition_lista_enter);
         getWindow().setEnterTransition(lista_enter);
         setContentView(R.layout.activity_listas);
+        showCrossPromoDialog();
         FloatingActionButton fab=(FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,5 +238,27 @@ public class ListasActivity extends AppCompatActivity{
             i.setDataAndType(uri,getContentResolver().getType(uri)); i.putExtra(Intent.EXTRA_STREAM, uri);
             i.putExtra(Intent.EXTRA_TEXT, texto); startActivity(Intent.createChooser(i, "Selecciona aplicación"));
         }
+    }
+
+    private void showCrossPromoDialog() {
+        final Dialog dialog = new Dialog(this, R.style.Theme_AppCompat);
+        dialog.setContentView(R.layout.dialog_crosspromotion);
+        dialog.setCancelable(true);
+        Button buttonCancel = (Button) dialog.findViewById(R.id.buttonCancel);
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        Button boton = (Button) dialog.findViewById(R.id.buttonDescargar);
+        boton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
+                        "https://play.google.com/store/apps/details?" +
+                                "id=com.pfg.mi1robot")));
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }
