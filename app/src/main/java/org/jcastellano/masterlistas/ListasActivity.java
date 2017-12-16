@@ -28,8 +28,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -57,6 +59,7 @@ public class ListasActivity extends AppCompatActivity{
     private ListasActivity _this;
     private FirebaseRemoteConfig remoteConfig;
     private AdView adView;
+    private InterstitialAd interstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,15 @@ public class ListasActivity extends AppCompatActivity{
         Transition lista_enter = TransitionInflater.from(this) .inflateTransition(R.transition.transition_lista_enter);
         getWindow().setEnterTransition(lista_enter);
         setContentView(R.layout.activity_listas);
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId("ca-app-pub-5998665674857302/5041605208");
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                interstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        });
         adView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
@@ -194,6 +206,17 @@ public class ListasActivity extends AppCompatActivity{
             }
         }, 0);
         new RateMyApp(this).app_launched();
+        FloatingActionButton f=(FloatingActionButton) findViewById(R.id.fab);
+        f.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (interstitialAd.isLoaded()) {
+                    interstitialAd.show();
+                } else {
+                    Toast.makeText(ListasActivity.this, "El Anuncio no esta disponible aun", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     @Override
