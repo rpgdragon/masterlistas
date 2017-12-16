@@ -28,6 +28,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -54,6 +56,7 @@ public class ListasActivity extends AppCompatActivity{
     private RecyclerView.LayoutManager lManager;
     private ListasActivity _this;
     private FirebaseRemoteConfig remoteConfig;
+    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,9 @@ public class ListasActivity extends AppCompatActivity{
         Transition lista_enter = TransitionInflater.from(this) .inflateTransition(R.transition.transition_lista_enter);
         getWindow().setEnterTransition(lista_enter);
         setContentView(R.layout.activity_listas);
+        adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
         showCrossPromoDialog();
         FloatingActionButton fab=(FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

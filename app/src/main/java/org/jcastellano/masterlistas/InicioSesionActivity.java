@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.ArrayList;
 
 public class InicioSesionActivity extends AppCompatActivity {
@@ -21,6 +23,7 @@ public class InicioSesionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_sesion);
+        MobileAds.initialize(this,"ca-app-pub-5998665674857302~8143369128");
         Button buttonBloqueo = (Button) findViewById(R.id.boton_facebook);
         buttonBloqueo.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
