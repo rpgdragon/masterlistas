@@ -32,6 +32,10 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -60,6 +64,7 @@ public class ListasActivity extends AppCompatActivity{
     private FirebaseRemoteConfig remoteConfig;
     private AdView adView;
     private InterstitialAd interstitialAd;
+    private RewardedVideoAd ad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,31 @@ public class ListasActivity extends AppCompatActivity{
         Transition lista_enter = TransitionInflater.from(this) .inflateTransition(R.transition.transition_lista_enter);
         getWindow().setEnterTransition(lista_enter);
         setContentView(R.layout.activity_listas);
+        ad = MobileAds.getRewardedVideoAdInstance(this);
+        ad.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+            @Override
+            public void onRewardedVideoAdLoaded() {
+                Toast.makeText(ListasActivity.this,"Vídeo Bonificado cargado", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onRewardedVideoAdOpened() {}
+            @Override
+            public void onRewardedVideoStarted() {}
+            @Override
+            public void onRewardedVideoAdClosed() {
+                ad.loadAd("ca-app-pub-5998665674857302/2632022145", new AdRequest .Builder().build());
+            }
+            @Override
+            public void onRewarded(RewardItem rewardItem) {
+                Toast.makeText(ListasActivity.this, "onRewarded: moneda virtual: " + rewardItem.getType() + " aumento: " + rewardItem.getAmount(), Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onRewardedVideoAdLeftApplication() {}
+
+            @Override
+            public void onRewardedVideoAdFailedToLoad(int i) {}
+        });
+        ad.loadAd("ca-app-pub-5998665674857302/2632022145", new AdRequest.Builder().build());
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId("ca-app-pub-5998665674857302/5041605208");
         interstitialAd.loadAd(new AdRequest.Builder().build());
@@ -132,6 +162,11 @@ public class ListasActivity extends AppCompatActivity{
                         break;
                     case R.id.nav_compartir_desarrollador:
                         compatirTexto( "https://play.google.com/store/apps/dev?id=5995071858532195111");
+                        break;
+                    case R.id.nav_1:
+                        if (ad.isLoaded()) {
+                            ad.show();
+                        }
                         break;
                     default:
                         Toast.makeText(getApplicationContext(), menuItem.getTitle(), Toast.LENGTH_SHORT).show();
