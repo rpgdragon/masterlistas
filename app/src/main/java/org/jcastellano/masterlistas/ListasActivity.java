@@ -23,18 +23,24 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.facebook.ads.Ad;
+import com.facebook.ads.AdChoicesView;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdSettings;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.InterstitialAdListener;
+import com.facebook.ads.MediaView;
+import com.facebook.ads.NativeAd;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -73,6 +79,7 @@ public class ListasActivity extends AppCompatActivity{
     private com.facebook.ads.AdView adViewFacebook;
     private InterstitialAd interstitialAd;
     private RewardedVideoAd ad;
+    private NativeAd nativeAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +89,9 @@ public class ListasActivity extends AppCompatActivity{
         Transition lista_enter = TransitionInflater.from(this) .inflateTransition(R.transition.transition_lista_enter);
         getWindow().setEnterTransition(lista_enter);
         setContentView(R.layout.activity_listas);
+        crearAnuncioBannerFacebook();
+        crearAnuncioIntersticialFacebook();
+        crearAnuncioNativoFacebook();
         ad = MobileAds.getRewardedVideoAdInstance(this);
         ad.setRewardedVideoAdListener(new RewardedVideoAdListener() {
             @Override
@@ -260,8 +270,7 @@ public class ListasActivity extends AppCompatActivity{
                 }
             }
         });
-        crearAnuncioBannerFacebook();
-        crearAnuncioIntersticialFacebook();
+
     }
 
     @Override
@@ -364,6 +373,48 @@ public class ListasActivity extends AppCompatActivity{
             public void onLoggingImpression(Ad ad) {}
         });
         interstitialAd.loadAd();
+    }
+
+    private void crearAnuncioNativoFacebook() {
+        nativeAd = new NativeAd(this, "YOUR_PLACEMENT_ID");
+        nativeAd.setAdListener(new com.facebook.ads.AdListener() {
+            @Override
+            public void onError(Ad ad, AdError error) {}
+            @Override
+            public void onAdLoaded(Ad ad) {
+                if (nativeAd != null) {
+                    nativeAd.unregisterView();
+                }
+                LinearLayout nativeAdContainer = (LinearLayout) findViewById(R.id.native_ad_container);
+                LayoutInflater inflater = LayoutInflater.from( ListasActivity.this);
+                LinearLayout adView = (LinearLayout) inflater.inflate(R.layout.native_ad, nativeAdContainer, false);
+                nativeAdContainer.addView(adView);
+                ImageView nativeAdIcon = (ImageView) adView.findViewById( R.id.native_ad_icon);
+                TextView nativeAdTitle = (TextView) adView.findViewById( R.id.native_ad_title);
+                MediaView nativeAdMedia = (MediaView) adView.findViewById( R.id.native_ad_media);
+                TextView nativeAdSocialContext = (TextView) adView.findViewById( R.id.native_ad_social_context);
+                TextView nativeAdBody = (TextView) adView.findViewById( R.id.native_ad_body);
+                Button nativeAdCallToAction = (Button) adView.findViewById( R.id.native_ad_call_to_action);
+                nativeAdTitle.setText(nativeAd.getAdTitle());
+                nativeAdSocialContext.setText(nativeAd.getAdSocialContext());
+                nativeAdBody.setText(nativeAd.getAdBody());
+                nativeAdCallToAction.setText(nativeAd.getAdCallToAction());
+                NativeAd.Image adIcon = nativeAd.getAdIcon();
+                NativeAd.downloadAndDisplayImage(adIcon, nativeAdIcon);
+                nativeAdMedia.setNativeAd(nativeAd);
+                LinearLayout adChoicesContainer = (LinearLayout) findViewById( R.id.ad_choices_container);
+                AdChoicesView adChoicesView = new AdChoicesView( ListasActivity.this, nativeAd, true);
+                adChoicesContainer.addView(adChoicesView); List<View> clickableViews = new ArrayList<>();
+                clickableViews.add(nativeAdTitle);
+                clickableViews.add(nativeAdCallToAction);
+                nativeAd.registerViewForInteraction(nativeAdContainer, clickableViews);
+            }
+            @Override
+            public void onAdClicked(Ad ad) {}
+            @Override
+            public void onLoggingImpression(Ad ad) {}
+        });
+        nativeAd.loadAd();
     }
 
     @Override
