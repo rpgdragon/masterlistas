@@ -1,13 +1,21 @@
 package org.jcastellano.masterlistas;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -33,6 +41,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.vending.billing.IInAppBillingService;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdChoicesView;
 import com.facebook.ads.AdError;
@@ -60,6 +69,9 @@ import com.sdsmdg.harjot.rotatingtext.RotatingTextWrapper;
 import com.sdsmdg.harjot.rotatingtext.models.Rotatable;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -80,6 +92,12 @@ public class ListasActivity extends AppCompatActivity{
     private InterstitialAd interstitialAd;
     private RewardedVideoAd ad;
     private NativeAd nativeAd;
+    private IInAppBillingService serviceBilling;
+    private ServiceConnection serviceConnection;
+    private final String ID_ARTICULO = "org.jmcastellano.masterlistas.listas.notas.producto";
+    private final String ID_SUSCRIPCION = "org.jmcastellano.masterlistas.listas.notas.suscripcion";
+    private final int INAPP_BILLING = 1;
+    private final String developerPayLoad = "información adicional";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +199,15 @@ public class ListasActivity extends AppCompatActivity{
                     case R.id.nav_compartir_desarrollador:
                         compatirTexto( "https://play.google.com/store/apps/dev?id=5995071858532195111");
                         break;
+                    case R.id.nav_articulo_no_recurrente:
+                        comprarProducto();
+                        break;
+                    case R.id.nav_susbripcion:
+                        comprarSuscripcion(ListasActivity.this);
+                        break;
+                    case R.id.nav_consulta_inapps_disponibles:
+                        getInAppInformationOfProducts();
+                        break;
                     case R.id.nav_1:
                         if (ad.isLoaded()) {
                             ad.show();
@@ -270,7 +297,7 @@ public class ListasActivity extends AppCompatActivity{
                 }
             }
         });
-
+        serviceConectInAppBilling();
     }
 
     @Override
@@ -422,5 +449,135 @@ public class ListasActivity extends AppCompatActivity{
         if (adViewFacebook != null) {
             adViewFacebook.destroy();
         }
-        super.onDestroy(); }
+        super.onDestroy();
+    }
+
+    public void serviceConectInAppBilling() {
+        serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                serviceBilling = null;
+            }
+            @Override
+            public void onServiceConnected( ComponentName name, IBinder service) {
+                serviceBilling=IInAppBillingService.Stub.asInterface(service);
+            }
+        };
+        Intent serviceIntent = new Intent( "com.android.vending.billing.InAppBillingService.BIND");
+        serviceIntent.setPackage("com.android.vending");
+        bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    public void comprarProducto() {
+        if (serviceBilling != null) {
+            Bundle buyIntentBundle = null;
+            try {
+                buyIntentBundle = serviceBilling.getBuyIntent(3, getPackageName(), ID_ARTICULO, "inapp", developerPayLoad);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            PendingIntent pendingIntent = buyIntentBundle.getParcelable("BUY_INTENT");
+            try {
+                if (pendingIntent != null) {
+                    startIntentSenderForResult(pendingIntent.getIntentSender(), INAPP_BILLING, new Intent(), 0, 0, 0);
+                }
+            } catch (IntentSender.SendIntentException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(this, "InApp Billing service not available", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case INAPP_BILLING: {
+                int responseCode = data.getIntExtra("RESPONSE_CODE", 0);
+                String purchaseData = data.getStringExtra("INAPP_PURCHASE_DATA");
+                String dataSignature = data.getStringExtra( "INAPP_DATA_SIGNATURE");
+                if (resultCode == RESULT_OK) {
+                    try {
+                        JSONObject jo = new JSONObject(purchaseData);
+                        String sku = jo.getString("productId");
+                        String developerPayload = jo.getString("developerPayload");
+                        String purchaseToken = jo.getString("purchaseToken");
+                        if (sku.equals(ID_ARTICULO)) {
+                            Toast.makeText(this,"Compra completada", Toast.LENGTH_LONG).show();
+                            backToBuy(purchaseToken);
+                        } else
+                            if (sku.equals(ID_SUSCRIPCION)) {
+                            Toast.makeText(this, "Suscrición correcta", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    public void backToBuy(String token){
+        if (serviceBilling != null) {
+            try {
+                int response = serviceBilling.consumePurchase( 3, getPackageName(), token);
+            }
+            catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void comprarSuscripcion(Activity activity) {
+        if (serviceBilling != null) {
+            Bundle buyIntentBundle = null;
+            try {
+                buyIntentBundle = serviceBilling.getBuyIntent(3, activity .getPackageName(), ID_SUSCRIPCION, "subs", developerPayLoad);
+            }
+            catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            assert buyIntentBundle != null;
+            PendingIntent pendingIntent = buyIntentBundle.getParcelable("BUY_INTENT");
+            try {
+                assert pendingIntent != null;
+                activity.startIntentSenderForResult(pendingIntent .getIntentSender(), INAPP_BILLING, new Intent(), 0, 0, 0);
+            }
+            catch (IntentSender.SendIntentException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            Toast.makeText(activity, "Servicio de suscripción no disponible", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void getInAppInformationOfProducts(){
+        ArrayList<String> skuList = new ArrayList<String> ();
+        skuList.add(ID_ARTICULO);
+        Bundle querySkus = new Bundle();
+        querySkus.putStringArrayList("ITEM_ID_LIST", skuList);
+        Bundle skuDetails;
+        ArrayList<String> responseList;
+        try {
+            skuDetails = serviceBilling.getSkuDetails(3, getPackageName(), "inapp", querySkus);
+            int response = skuDetails.getInt("RESPONSE_CODE");
+            if (response == 0) {
+                responseList = skuDetails.getStringArrayList("DETAILS_LIST");
+                assert responseList != null;
+                for (String thisResponse : responseList) {
+                    JSONObject object = new JSONObject(thisResponse);
+                    String ref = object.getString("productId");
+                    System.out.println("InApp Reference: " + ref);
+                    String price = object.getString("price");
+                    System.out.println("InApp Price: " + price);
+                }
+            }
+        }
+        catch (RemoteException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }
