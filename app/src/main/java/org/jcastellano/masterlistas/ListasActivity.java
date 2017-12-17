@@ -30,8 +30,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
 import com.facebook.ads.AdSettings;
 import com.facebook.ads.AdSize;
+import com.facebook.ads.InterstitialAdListener;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -258,6 +261,7 @@ public class ListasActivity extends AppCompatActivity{
             }
         });
         crearAnuncioBannerFacebook();
+        crearAnuncioIntersticialFacebook();
     }
 
     @Override
@@ -337,6 +341,29 @@ public class ListasActivity extends AppCompatActivity{
         LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
         adContainer.addView(adViewFacebook);
         adViewFacebook.loadAd();
+    }
+
+    private void crearAnuncioIntersticialFacebook(){
+        final com.facebook.ads.InterstitialAd interstitialAd = new com.facebook.ads.InterstitialAd(this, "152993622000683_153160368650675");
+        interstitialAd.setAdListener(new InterstitialAdListener() {
+            @Override
+            public void onInterstitialDisplayed(Ad ad) {}
+            @Override
+            public void onInterstitialDismissed(Ad ad) {}
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                Toast.makeText(ListasActivity.this, "Error: " + adError.getErrorMessage(),Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onAdLoaded(Ad ad) {
+                interstitialAd.show();
+            }
+            @Override
+            public void onAdClicked(Ad ad) {}
+            @Override
+            public void onLoggingImpression(Ad ad) {}
+        });
+        interstitialAd.loadAd();
     }
 
     @Override
