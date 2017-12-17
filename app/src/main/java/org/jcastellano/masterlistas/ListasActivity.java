@@ -98,6 +98,8 @@ public class ListasActivity extends AppCompatActivity{
     private final String ID_SUSCRIPCION = "org.jmcastellano.masterlistas.listas.notas.suscripcion";
     private final int INAPP_BILLING = 1;
     private final String developerPayLoad = "información adicional";
+    private static final String ID_DISPOSITIVO_FISICO_TEST="BBB9E876CAF2010F7CF565B54645A5C7";
+    private boolean showInterticial=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +124,7 @@ public class ListasActivity extends AppCompatActivity{
             public void onRewardedVideoStarted() {}
             @Override
             public void onRewardedVideoAdClosed() {
-                ad.loadAd("ca-app-pub-5998665674857302/2632022145", new AdRequest.Builder().addTestDevice("BBB9E876CAF2010F7CF565B54645A5C7").build());
+                ad.loadAd("ca-app-pub-5998665674857302/2632022145", new AdRequest.Builder().addTestDevice(ID_DISPOSITIVO_FISICO_TEST).build());
             }
             @Override
             public void onRewarded(RewardItem rewardItem) {
@@ -135,18 +137,7 @@ public class ListasActivity extends AppCompatActivity{
             public void onRewardedVideoAdFailedToLoad(int i) {}
         });
         ad.loadAd("ca-app-pub-5998665674857302/2632022145", new AdRequest.Builder().addTestDevice("BBB9E876CAF2010F7CF565B54645A5C7").build());
-        interstitialAd = new InterstitialAd(this);
-        interstitialAd.setAdUnitId("ca-app-pub-5998665674857302/5041605208");
-        interstitialAd.loadAd(new AdRequest.Builder().build());
-        interstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                interstitialAd.loadAd(new AdRequest.Builder().build());
-            }
-        });
         adView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
         showCrossPromoDialog();
         FloatingActionButton fab=(FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -510,6 +501,7 @@ public class ListasActivity extends AppCompatActivity{
                         String purchaseToken = jo.getString("purchaseToken");
                         if (sku.equals(ID_ARTICULO)) {
                             Toast.makeText(this,"Compra completada", Toast.LENGTH_LONG).show();
+                            setAds(false);
                             backToBuy(purchaseToken);
                         } else
                             if (sku.equals(ID_SUSCRIPCION)) {
@@ -638,6 +630,10 @@ public class ListasActivity extends AppCompatActivity{
                 System.out.println("Inapp Sku: " + sku);
                 if (sku.equals(ID_ARTICULO)) {
                     Toast.makeText(this, "Inapp comprado: " + sku + "el dia " + purchaseData, Toast.LENGTH_LONG).show();
+                    setAds(false);
+                }
+                else {
+                    setAds(true);
                 }
             }
         }
@@ -673,5 +669,25 @@ public class ListasActivity extends AppCompatActivity{
             }
         }
 
+    }
+
+    private void setAds(Boolean adsEnabled){
+        if(adsEnabled) {
+            AdRequest adRequest = new AdRequest.Builder() .addTestDevice(ID_DISPOSITIVO_FISICO_TEST).build();
+            adView.loadAd(adRequest);
+            interstitialAd = new InterstitialAd(this);
+            interstitialAd.setAdUnitId("ca-app-pub-5998665674857302/5041605208");
+            interstitialAd.loadAd(new AdRequest.Builder() .addTestDevice(ID_DISPOSITIVO_FISICO_TEST).build());
+            interstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    interstitialAd.loadAd(new AdRequest.Builder() .addTestDevice(ID_DISPOSITIVO_FISICO_TEST).build());
+                }
+            });
+            showInterticial = true;
+        }else{
+            showInterticial = false;
+            adView.setVisibility(View.GONE);
+        }
     }
 }
