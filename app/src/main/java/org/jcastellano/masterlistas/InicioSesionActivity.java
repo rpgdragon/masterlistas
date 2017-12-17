@@ -2,9 +2,14 @@ package org.jcastellano.masterlistas;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -13,6 +18,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.MobileAds;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class InicioSesionActivity extends AppCompatActivity {
@@ -23,6 +30,7 @@ public class InicioSesionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_sesion);
+        extraerKeyHash();
         MobileAds.initialize(this,"ca-app-pub-5998665674857302~8143369128");
         Button buttonBloqueo = (Button) findViewById(R.id.boton_facebook);
         buttonBloqueo.setOnClickListener(new View.OnClickListener() {
@@ -90,4 +98,17 @@ public class InicioSesionActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    private void extraerKeyHash(){
+        String packageName = getPackageName();
+        try {
+            PackageInfo info = this.getPackageManager() .getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyLog", "KeyHash:"+ Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        }
+        catch (PackageManager.NameNotFoundException e) { }
+        catch (NoSuchAlgorithmException e) {} }
 }

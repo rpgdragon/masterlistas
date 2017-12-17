@@ -26,8 +26,12 @@ import android.transition.TransitionInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+
+import com.facebook.ads.AdSettings;
+import com.facebook.ads.AdSize;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -63,6 +67,7 @@ public class ListasActivity extends AppCompatActivity{
     private ListasActivity _this;
     private FirebaseRemoteConfig remoteConfig;
     private AdView adView;
+    private com.facebook.ads.AdView adViewFacebook;
     private InterstitialAd interstitialAd;
     private RewardedVideoAd ad;
 
@@ -86,7 +91,7 @@ public class ListasActivity extends AppCompatActivity{
             public void onRewardedVideoStarted() {}
             @Override
             public void onRewardedVideoAdClosed() {
-                ad.loadAd("ca-app-pub-5998665674857302/2632022145", new AdRequest .Builder().build());
+                ad.loadAd("ca-app-pub-5998665674857302/2632022145", new AdRequest.Builder().addTestDevice("BBB9E876CAF2010F7CF565B54645A5C7").build());
             }
             @Override
             public void onRewarded(RewardItem rewardItem) {
@@ -98,7 +103,7 @@ public class ListasActivity extends AppCompatActivity{
             @Override
             public void onRewardedVideoAdFailedToLoad(int i) {}
         });
-        ad.loadAd("ca-app-pub-5998665674857302/2632022145", new AdRequest.Builder().build());
+        ad.loadAd("ca-app-pub-5998665674857302/2632022145", new AdRequest.Builder().addTestDevice("BBB9E876CAF2010F7CF565B54645A5C7").build());
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId("ca-app-pub-5998665674857302/5041605208");
         interstitialAd.loadAd(new AdRequest.Builder().build());
@@ -252,6 +257,7 @@ public class ListasActivity extends AppCompatActivity{
                 }
             }
         });
+        crearAnuncioBannerFacebook();
     }
 
     @Override
@@ -325,4 +331,18 @@ public class ListasActivity extends AppCompatActivity{
         });
         dialog.show();
     }
+
+    private void crearAnuncioBannerFacebook(){
+        adViewFacebook = new com.facebook.ads.AdView(this, "152993622000683_152999125333466", AdSize.BANNER_HEIGHT_50);
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+        adContainer.addView(adViewFacebook);
+        adViewFacebook.loadAd();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (adViewFacebook != null) {
+            adViewFacebook.destroy();
+        }
+        super.onDestroy(); }
 }
